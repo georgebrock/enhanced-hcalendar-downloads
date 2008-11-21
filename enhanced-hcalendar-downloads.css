@@ -1,0 +1,35 @@
+/*
+Enhanced hCalendar downloads
+Author: George Brocklehurst (george.brocklehurst@gmail.com)
+Style based on expose-mf.css by Jon Hicks (http://www.hicksdesign.co.uk/journal/highlight-microformats-with-css)
+*/
+
+#enhanced-hcalendar-menu {
+	border:2px solid #E0E7B8;
+	background-color:#F8F8EC;
+	padding:10px;
+	
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	-webkit-box-shadow:0 5px 20px rgba(0,0,0,0.5);
+}
+
+#enhanced-hcalendar-menu h6 {
+	margin:0;
+	font-size:1em;
+}
+
+#enhanced-hcalendar-menu ul {
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+#enhanced-hcalendar-menu li {
+	margin-bottom:0.25em;
+}
+
+#enhanced-hcalendar-menu li.ics {}
+#enhanced-hcalendar-menu li.google {}
+#enhanced-hcalendar-menu li.yahoo {}
+#enhanced-hcalendar-menu li.thirtyboxes {}
