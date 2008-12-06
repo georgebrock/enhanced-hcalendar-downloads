@@ -9,7 +9,7 @@ $(function()
 });
 
 function enhancedHCalendarInitLinks(selector)
-{
+{	
 	$(selector)
 		.click(function(e)
 		{
@@ -74,22 +74,19 @@ function enhancedHCalendarMenu(technoratiURL)
 	{
 		var evt = events[0];
 	
-		var dtend;
-		if(typeof(evt.dtend) != "undefined")
-			dtend = evt.dtend;
-		else if(!dtend && evt.duration)
+		if(!evt.dtend && evt.duration)
 		{
 			var durationMinutes = evt.duration.match(/^PT(\d+)M$/)[1];
-			dtend = new Date();
-			dtend.setTime(evt.dtstart.getTime() + durationMinutes * 60000);
+			evt.dtend = new Date();
+			evt.dtend.setTime(evt.dtstart.getTime() + durationMinutes * 60000);
 		}
 		else
-			dtend = evt.dtstart;
+			evt.dtend = evt.dtstart;
 	
 		var urlStartDate = enhancedHCalendarMakeISODate(evt.dtstart);
-		var urlEndDate = dtend ? enhancedHCalendarMakeISODate(dtend) : urlStartDate;
+		var urlEndDate = enhancedHCalendarMakeISODate(evt.dtend);
 	
-		var mDur = (dtend.getTime() - evt.dtstart.getTime()) / 60000;
+		var mDur = (evt.dtend.getTime() - evt.dtstart.getTime()) / 60000;
 		var hDur = 0;
 		if(mDur >= 60)
 		{
