@@ -74,14 +74,17 @@ function enhancedHCalendarMenu(technoratiURL)
 	{
 		var evt = events[0];
 	
-		if(!evt.dtend && evt.duration)
+		if(!evt.dtend)
 		{
-			var durationMinutes = evt.duration.match(/^PT(\d+)M$/)[1];
-			evt.dtend = new Date();
-			evt.dtend.setTime(evt.dtstart.getTime() + durationMinutes * 60000);
+			if(evt.duration)
+			{
+				var durationMinutes = evt.duration.match(/^PT(\d+)M$/)[1];
+				evt.dtend = new Date();
+				evt.dtend.setTime(evt.dtstart.getTime() + durationMinutes * 60000);
+			}
+			else
+				evt.dtend = evt.dtstart;
 		}
-		else
-			evt.dtend = evt.dtstart;
 	
 		var urlStartDate = enhancedHCalendarMakeISODate(evt.dtstart);
 		var urlEndDate = enhancedHCalendarMakeISODate(evt.dtend);
