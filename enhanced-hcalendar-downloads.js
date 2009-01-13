@@ -16,12 +16,29 @@ function enhancedHCalendarInitLinks(selector)
 			var $menu = enhancedHCalendarMenu( $(this).attr("href") );
 			if(!$menu)
 				return true; // If the calendar menu creation fails, allow the link click to continue
-			
+				
 			$menu
 				.css("position", "absolute")
-				.css("top", (e.pageY-30)+"px")
-				.css("left", (e.pageX-30)+"px")
 				.show();
+				
+			var x = e.pageX - 30;
+			var y = e.pageY - 30;
+			
+			if(x < 2)
+				x = 2;
+			
+			if(y < 2)
+				y = 2;
+			
+			if(x + $menu.width() > $(window).width())
+				x = $(window).width() - $menu.width() - 2;
+				
+			if(y + $menu.height() > $(window).height())
+				y = $(window).height() - $menu.height() - 2;
+			
+			$menu
+				.css("top", y+"px")
+				.css("left", x+"px");
 				
 			if(typeof(this.blur) == "function")
 				this.blur();
