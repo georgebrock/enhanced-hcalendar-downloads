@@ -118,8 +118,8 @@ function enhancedHCalendarMenu(technoratiURL)
 		$("#enhanced-hcalendar-menu li.google, #enhanced-hcalendar-menu li.yahoo").show();
 	
 		$("#enhanced-hcalendar-menu h6").html("Add &ldquo;"+evt.summary+"&rdquo; to...");
-		$("#enhanced-hcalendar-menu li.google a").attr("href", "http://www.google.com/calendar/event?action=TEMPLATE&text="+evt.summary+"&dates="+urlStartDate+"/"+urlEndDate+"&location=Hyde+Park+Picture+House&sprop=website:"+window.location);
-		$("#enhanced-hcalendar-menu li.yahoo a").attr("href", "http://calendar.yahoo.com/?v=60&TITLE="+evt.summary+"&ST="+urlStartDate+"&DUR="+urlDuration+"&in_loc=Hyde+Park+Picture+House&URL="+eventFragmentURL);
+		$("#enhanced-hcalendar-menu li.google a").attr("href", "http://www.google.com/calendar/event?action=TEMPLATE&text="+evt.summary+"&dates="+urlStartDate+"/"+urlEndDate+(typeof(evt.location) != "undefined" ? "&location="+evt.location : "")+"&sprop=website:"+window.location);
+		$("#enhanced-hcalendar-menu li.yahoo a").attr("href", "http://calendar.yahoo.com/?v=60&TITLE="+evt.summary+"&ST="+urlStartDate+"&DUR="+urlDuration+(typeof(evt.location) != "undefined" ? "&in_loc="+evt.location : "")+"&URL="+eventFragmentURL);
 	}
 	else
 	{
