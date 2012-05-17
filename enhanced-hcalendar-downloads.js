@@ -5,7 +5,7 @@ Author: George Brocklehurst (george.brocklehurst@gmail.com)
 
 $(function()
 {
-	enhancedHCalendarInitLinks("a[href^=http://technorati.com/events/]");
+	enhancedHCalendarInitLinks("a[href^=http://technorati.com/events/],a[href^=http://feeds.technorati.com/events/],a[href^=http://h2vx.com/ics/]");
 });
 
 function enhancedHCalendarInitLinks(selector)
@@ -74,7 +74,7 @@ function enhancedHCalendarMenu(technoratiURL)
 	}
 	
 	// Get variations on the technorati parser URL
-	var eventFragmentURL = technoratiURL.replace(/^http:\/\/technorati.com\/events\//, "");
+	var eventFragmentURL = technoratiURL.replace(/^http:\/\/((feeds.)?technorati.com\/events|h2vx.com/ics)\//, "");
 	var webcalURL = technoratiURL.replace(/^http:\/\//, "webcal://");
 	
 	// Get the event container ID
