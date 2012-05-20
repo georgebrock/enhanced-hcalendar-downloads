@@ -56,35 +56,31 @@ function enhancedHCalendarInitLinks(selector) {
 }
 
 function enhancedHCalendarMenu(iCalendarURL) {
-    // Make sure we have a menu
-    var $menu = $("#enhanced-hcalendar-menu");
+    var $menu, $list;
+
+    $menu = $("#enhanced-hcalendar-menu");
     if ($menu.length === 0) {
+        $list = $("<ul></ul>");
         $menu = $("<div></div>")
             .append("<h6>Add to&hellip;</h6>")
-            .append($("<ul></ul>")
-                .append("<li class='ics'><a title='Download in iCalendar format for iCal, Outlook etc.'>Desktop calendar software</a></li>")
-                .append("<li class='google'><a>Google calendar</a></li>")
-                .append("<li class='yahoo'><a>Yahoo! calendar</a></li>")
-                .append("<li class='thirtyboxes'><a>30 boxes</a></li>")
-            )
+            .append($list)
             .attr("id", "enhanced-hcalendar-menu")
             .mouseleave(function(e) {
                 $(this).hide();
             })
             .appendTo("body");
+    } else {
+        $list = $menu.find("ul");
+        $list.html("");
     }
 
     // Get variations on the technorati parser URL
-    var eventFragmentURL = iCalendarURL.replace(/^http:\/\/((feeds.)?technorati.com\/events|h2vx.com\/ics)\//, "");
-    var webcalURL = iCalendarURL.replace(/^http:\/\//, "webcal://");
+    var eventFragmentURL = iCalendarURL.replace(
+        /^http:\/\/((feeds.)?technorati.com\/events|h2vx.com\/ics)\//, "");
 
     // Get the event container ID
     var parts = eventFragmentURL.split("#");
     var elementID = parts[1];
-
-    // Set URLs that don't need specific event details
-    $menu.find("li.ics a").attr("href", iCalendarURL);
-    $menu.find("li.thirtyboxes a").attr("href", "http://30boxes.com/add.php?ics="+iCalendarURL);
 
     // Extract event using sumo
     var events = HCalendar.discover(document.getElementById(elementID));
@@ -110,17 +106,55 @@ function enhancedHCalendarMenu(iCalendarURL) {
             hDur = Math.floor(mDur / 60);
             mDur -= hDur * 60;
         }
-        var urlDuration = (hDur < 10 ? "0"+hDur : hDur) + (mDur < 10 ? "0"+mDur : mDur);
-
-        $menu.find("li.google, li.yahoo").show();
+        var urlDuration = (hDur < 10 ? "0"+hDur : hDur) +
+                          (mDur < 10 ? "0"+mDur : mDur);
 
         $menu.find("h6").html("Add &ldquo;"+evt.summary+"&rdquo; to&hellip;");
-        $menu.find("li.google a").attr("href", "http://www.google.com/calendar/event?action=TEMPLATE&text="+evt.summary+"&dates="+urlStartDate+"/"+urlEndDate+(typeof(evt.location) != "undefined" ? "&location="+evt.location : "")+"&sprop=website:"+window.location);
-        $menu.find("li.yahoo a").attr("href", "http://calendar.yahoo.com/?v=60&TITLE="+evt.summary+"&ST="+urlStartDate+"&DUR="+urlDuration+(typeof(evt.location) != "undefined" ? "&in_loc="+evt.location : "")+"&URL="+eventFragmentURL);
-    } else {
-        $menu.find("h6").html("Add to&hellip;");
-        $menu.find("li.google, li.yahoo").hide();
+
+        var googleURL = "http://www.google.com/calendar/event" +
+                        "?action=TEMPLATE" +
+                        "&text=" + evt.summary +
+                        "&dates=" + urlStartDate + "/" + urlEndDate +
+                        "&sprop=website:" + window.location;
+        if (evt.location !== undefined) {
+            googleURL += "&location=" + evt.location;
+        }
+
+        $list.append(
+            "<li class='google'>" +
+            "<a href='" + googleURL + "'>Google Calendar</a>" +
+            "</li>");
+
+        var yahooURL = "http://calendar.yahoo.com/" +
+                       "?v=60" +
+                       "&TITLE=" + evt.summary +
+                       "&ST=" + urlStartDate +
+                       "&DUR=" + urlDuration +
+                       "&URL=" + eventFragmentURL;
+        if (evt.location !== undefined) {
+            yahooURL += "&in_loc=" + evt.location;
+        }
+
+        $list.append(
+            "<li class='yahoo'>" +
+            "<a href='" + yahooURL + "'>Yahoo! Calendar</a>" +
+            "</li>");
     }
+
+    // Set URLs that don't need specific event details
+    $list.prepend(
+        "<li class='ics'>" +
+        "<a href='" + iCalendarURL + "'" +
+        "title='Download in iCalendar format for iCal, Outlook etc.'>" +
+        "Desktop calendar software" +
+        "</a></li>");
+
+    $list.append(
+        "<li class='thirtyboxes'>" +
+        "<a href='http://30boxes.com/add.php?ics=" + iCalendarURL + "'>" +
+        "30 boxes" +
+        "</a></li>");
+
 
     return $menu;
 }
