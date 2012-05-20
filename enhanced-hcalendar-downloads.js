@@ -60,7 +60,7 @@ function enhancedHCalendarMenu(technoratiURL) {
     var $menu = $("#enhanced-hcalendar-menu");
     if ($menu.length === 0) {
         $menu = $("<div></div>")
-            .append("<h6>Add to...</h6>")
+            .append("<h6>Add to&hellip;</h6>")
             .append($("<ul></ul>")
                 .append("<li class=\"ics\"><a title=\"Download in iCalendar format for iCal, Outlook etc.\">Desktop calendar software</a></li>")
                 .append("<li class=\"google\"><a>Google calendar</a></li>")
@@ -117,11 +117,11 @@ function enhancedHCalendarMenu(technoratiURL) {
 
         $("#enhanced-hcalendar-menu li.google, #enhanced-hcalendar-menu li.yahoo").show();
 
-        $("#enhanced-hcalendar-menu h6").html("Add &ldquo;"+evt.summary+"&rdquo; to...");
+        $("#enhanced-hcalendar-menu h6").html("Add &ldquo;"+evt.summary+"&rdquo; to&hellip;");
         $("#enhanced-hcalendar-menu li.google a").attr("href", "http://www.google.com/calendar/event?action=TEMPLATE&text="+evt.summary+"&dates="+urlStartDate+"/"+urlEndDate+(typeof(evt.location) != "undefined" ? "&location="+evt.location : "")+"&sprop=website:"+window.location);
         $("#enhanced-hcalendar-menu li.yahoo a").attr("href", "http://calendar.yahoo.com/?v=60&TITLE="+evt.summary+"&ST="+urlStartDate+"&DUR="+urlDuration+(typeof(evt.location) != "undefined" ? "&in_loc="+evt.location : "")+"&URL="+eventFragmentURL);
     } else {
-        $("#enhanced-hcalendar-menu h6").html("Add to...");
+        $("#enhanced-hcalendar-menu h6").html("Add to&hellip;");
         $("#enhanced-hcalendar-menu li.google, #enhanced-hcalendar-menu li.yahoo").hide();
     }
 
