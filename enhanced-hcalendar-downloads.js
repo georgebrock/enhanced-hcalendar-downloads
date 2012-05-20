@@ -86,8 +86,8 @@ function enhancedHCalendarMenu(technoratiURL) {
     var elementID = parts[1];
 
     // Set URLs that don't need specific event details
-    $("#enhanced-hcalendar-menu li.ics a").attr("href", technoratiURL);
-    $("#enhanced-hcalendar-menu li.thirtyboxes a").attr("href", "http://30boxes.com/add.php?ics="+technoratiURL);
+    $menu.find("li.ics a").attr("href", technoratiURL);
+    $menu.find("li.thirtyboxes a").attr("href", "http://30boxes.com/add.php?ics="+technoratiURL);
 
     // Extract event using sumo
     var events = HCalendar.discover(document.getElementById(elementID));
@@ -115,14 +115,14 @@ function enhancedHCalendarMenu(technoratiURL) {
         }
         var urlDuration = (hDur < 10 ? "0"+hDur : hDur) + (mDur < 10 ? "0"+mDur : mDur);
 
-        $("#enhanced-hcalendar-menu li.google, #enhanced-hcalendar-menu li.yahoo").show();
+        $menu.find("li.google, li.yahoo").show();
 
-        $("#enhanced-hcalendar-menu h6").html("Add &ldquo;"+evt.summary+"&rdquo; to&hellip;");
-        $("#enhanced-hcalendar-menu li.google a").attr("href", "http://www.google.com/calendar/event?action=TEMPLATE&text="+evt.summary+"&dates="+urlStartDate+"/"+urlEndDate+(typeof(evt.location) != "undefined" ? "&location="+evt.location : "")+"&sprop=website:"+window.location);
-        $("#enhanced-hcalendar-menu li.yahoo a").attr("href", "http://calendar.yahoo.com/?v=60&TITLE="+evt.summary+"&ST="+urlStartDate+"&DUR="+urlDuration+(typeof(evt.location) != "undefined" ? "&in_loc="+evt.location : "")+"&URL="+eventFragmentURL);
+        $menu.find("h6").html("Add &ldquo;"+evt.summary+"&rdquo; to&hellip;");
+        $menu.find("li.google a").attr("href", "http://www.google.com/calendar/event?action=TEMPLATE&text="+evt.summary+"&dates="+urlStartDate+"/"+urlEndDate+(typeof(evt.location) != "undefined" ? "&location="+evt.location : "")+"&sprop=website:"+window.location);
+        $menu.find("li.yahoo a").attr("href", "http://calendar.yahoo.com/?v=60&TITLE="+evt.summary+"&ST="+urlStartDate+"&DUR="+urlDuration+(typeof(evt.location) != "undefined" ? "&in_loc="+evt.location : "")+"&URL="+eventFragmentURL);
     } else {
-        $("#enhanced-hcalendar-menu h6").html("Add to&hellip;");
-        $("#enhanced-hcalendar-menu li.google, #enhanced-hcalendar-menu li.yahoo").hide();
+        $menu.find("h6").html("Add to&hellip;");
+        $menu.find("li.google, li.yahoo").hide();
     }
 
     return $menu;
