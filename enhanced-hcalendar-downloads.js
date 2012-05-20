@@ -55,7 +55,7 @@ function enhancedHCalendarInitLinks(selector) {
     });
 }
 
-function enhancedHCalendarMenu(technoratiURL) {
+function enhancedHCalendarMenu(iCalendarURL) {
     // Make sure we have a menu
     var $menu = $("#enhanced-hcalendar-menu");
     if ($menu.length === 0) {
@@ -78,16 +78,16 @@ function enhancedHCalendarMenu(technoratiURL) {
     }
 
     // Get variations on the technorati parser URL
-    var eventFragmentURL = technoratiURL.replace(/^http:\/\/((feeds.)?technorati.com\/events|h2vx.com\/ics)\//, "");
-    var webcalURL = technoratiURL.replace(/^http:\/\//, "webcal://");
+    var eventFragmentURL = iCalendarURL.replace(/^http:\/\/((feeds.)?technorati.com\/events|h2vx.com\/ics)\//, "");
+    var webcalURL = iCalendarURL.replace(/^http:\/\//, "webcal://");
 
     // Get the event container ID
     var parts = eventFragmentURL.split("#");
     var elementID = parts[1];
 
     // Set URLs that don't need specific event details
-    $menu.find("li.ics a").attr("href", technoratiURL);
-    $menu.find("li.thirtyboxes a").attr("href", "http://30boxes.com/add.php?ics="+technoratiURL);
+    $menu.find("li.ics a").attr("href", iCalendarURL);
+    $menu.find("li.thirtyboxes a").attr("href", "http://30boxes.com/add.php?ics="+iCalendarURL);
 
     // Extract event using sumo
     var events = HCalendar.discover(document.getElementById(elementID));
