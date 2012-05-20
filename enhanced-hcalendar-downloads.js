@@ -108,8 +108,7 @@ Author: George Brocklehurst (george.brocklehurst@gmail.com)
                 hDur = Math.floor(mDur / 60);
                 mDur -= hDur * 60;
             }
-            var urlDuration = (hDur < 10 ? "0"+hDur : hDur) +
-                              (mDur < 10 ? "0"+mDur : mDur);
+            var urlDuration = pad(hDur) + pad(mDur);
 
             $menu.find("h6").html("Add &ldquo;"+evt.summary+"&rdquo; to&hellip;");
 
@@ -162,20 +161,22 @@ Author: George Brocklehurst (george.brocklehurst@gmail.com)
     }
 
     function enhancedHCalendarMakeISODate(date) {
-        var d = {};
-        d.y = ""+date.getFullYear();
-        d.m = ""+(date.getMonth() + 1);
-        d.d = ""+date.getDate();
-        d.th = ""+date.getHours();
-        d.tm = ""+date.getMinutes();
-        d.ts = ""+date.getSeconds();
-        for (i in d) {
-            if (d[i].length < 2) {
-                d[i] = "0"+d[i];
-            }
-        }
+        var y, m, d, th, tm, ts;
 
-        return d.y+d.m+d.d+"T"+d.th+d.tm+d.ts;
+        y = "" + date.getFullYear();
+        m = pad(date.getMonth() + 1);
+        d = pad(date.getDate());
+        th = pad(date.getHours());
+        tm = pad(date.getMinutes());
+        ts = pad(date.getSeconds());
+
+        return y + m + d + "T" + th + tm + ts;
+    }
+
+    // Pads 1 digit numbers with a leading zero
+    // e.g. pad(7) === "07"; pad(11) === "11"
+    function pad(num) {
+        return num < 10 ? "0" + num : "" + num;
     }
 
 }());
