@@ -6,13 +6,10 @@ Author: George Brocklehurst (george.brocklehurst@gmail.com)
 (function () {
 
     $(function () {
-        enhancedHCalendarInitLinks(
-            "a[href^='http://technorati.com/events/']," +
-            "a[href^='http://feeds.technorati.com/events/']," +
-            "a[href^='http://h2vx.com/ics/']");
-    });
+        var selector = "a[href^='http://technorati.com/events/']," +
+                       "a[href^='http://feeds.technorati.com/events/']," +
+                       "a[href^='http://h2vx.com/ics/']";
 
-    function enhancedHCalendarInitLinks(selector) {
         $(selector).click(function (e) {
             var $menu, x, y;
 
@@ -55,7 +52,7 @@ Author: George Brocklehurst (george.brocklehurst@gmail.com)
 
             return false;
         });
-    }
+    });
 
     function buildMenu(iCalendarURL) {
         var $menu, $list;
