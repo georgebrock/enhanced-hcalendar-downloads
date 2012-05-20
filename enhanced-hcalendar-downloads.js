@@ -68,10 +68,7 @@ function enhancedHCalendarMenu(iCalendarURL) {
                 .append("<li class=\"thirtyboxes\"><a>30 boxes</a></li>")
             )
             .attr("id", "enhanced-hcalendar-menu")
-            .mouseover(function(e) {
-                $(this).show();
-            })
-            .mouseout(function(e) {
+            .mouseleave(function(e) {
                 $(this).hide();
             })
             .appendTo("body");
