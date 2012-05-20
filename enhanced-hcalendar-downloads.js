@@ -88,34 +88,16 @@ Author: George Brocklehurst (george.brocklehurst@gmail.com)
         var events = HCalendar.discover(document.getElementById(elementID));
         if (events.length > 0) {
             var evt = events[0];
+            normaliseEvent(evt);
 
-            if (!evt.dtend) {
-                if (evt.duration) {
-                    var durationMinutes = evt.duration.match(/^PT(\d+)M$/)[1];
-                    evt.dtend = new Date();
-                    evt.dtend.setTime(evt.dtstart.getTime() + durationMinutes * 60000);
-                } else {
-                    evt.dtend = evt.dtstart;
-                }
-            }
-
-            var urlStartDate = iso8601(evt.dtstart);
-            var urlEndDate = iso8601(evt.dtend);
-
-            var mDur = (evt.dtend.getTime() - evt.dtstart.getTime()) / 60000;
-            var hDur = 0;
-            if (mDur >= 60) {
-                hDur = Math.floor(mDur / 60);
-                mDur -= hDur * 60;
-            }
-            var urlDuration = pad(hDur) + pad(mDur);
-
-            $menu.find("h6").html("Add &ldquo;"+evt.summary+"&rdquo; to&hellip;");
+            $menu.find("h6")
+                .html("Add &ldquo;"+evt.summary+"&rdquo; to&hellip;");
 
             var googleURL = "http://www.google.com/calendar/event" +
                             "?action=TEMPLATE" +
                             "&text=" + evt.summary +
-                            "&dates=" + urlStartDate + "/" + urlEndDate +
+                            "&dates=" + evt.dtstart.iso8601 + "/" +
+                                        evt.dtend.iso8601 +
                             "&sprop=website:" + window.location;
             if (evt.location !== undefined) {
                 googleURL += "&location=" + evt.location;
@@ -129,8 +111,8 @@ Author: George Brocklehurst (george.brocklehurst@gmail.com)
             var yahooURL = "http://calendar.yahoo.com/" +
                            "?v=60" +
                            "&TITLE=" + evt.summary +
-                           "&ST=" + urlStartDate +
-                           "&DUR=" + urlDuration +
+                           "&ST=" + evt.dtstart.iso8601 +
+                           "&DUR=" + evt.duration.str +
                            "&URL=" + eventFragmentURL;
             if (evt.location !== undefined) {
                 yahooURL += "&in_loc=" + evt.location;
@@ -171,6 +153,45 @@ Author: George Brocklehurst (george.brocklehurst@gmail.com)
         ts = pad(date.getSeconds());
 
         return y + m + d + "T" + th + tm + ts;
+    }
+
+    // Puts the given event in a consistent state with the following
+    // guarantees:
+    // - dtend will be set (maybe derived from duration)
+    // - duration will be set, and converted to an object (may be derived
+    //   from dtstart and dtend, or the string parsed)
+    // - iso8601 properties will be added to dtstart and dtend
+    function normaliseEvent(evt) {
+        var duration = {};
+
+        if (!evt.dtend) {
+            if (evt.duration) {
+                duration.original = evt.duration;
+                duration.minutes = evt.duration.match(/^PT(\d+)M$/)[1];
+                evt.dtend = new Date();
+                evt.dtend.setTime(
+                    evt.dtstart.getTime() + duration.minutes * 60000);
+            } else {
+                evt.dtend = evt.dtstart;
+                duration.minutes = 0;
+            }
+        } else {
+            duration.minutes = (evt.dtend.getTime() - evt.dtstart.getTime());
+            duration.minutes /= 60000;
+        }
+
+        if (duration.minutes >= 60) {
+            duration.hours = Math.floor(duration.minutes / 60);
+            duration.minutes -= duration.hours * 60;
+        } else {
+            duration.hours = 0;
+        }
+
+        duration.str = pad(duration.hours) + pad(duration.minutes);
+        evt.duration = duration;
+
+        evt.dtstart.iso8601 = iso8601(evt.dtstart);
+        evt.dtend.iso8601 = iso8601(evt.dtend);
     }
 
     // Pads 1 digit numbers with a leading zero
