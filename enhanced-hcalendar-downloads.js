@@ -5,9 +5,9 @@ Author: George Brocklehurst (george.brocklehurst@gmail.com)
 
 $(function () {
     enhancedHCalendarInitLinks(
-        "a[href^=http://technorati.com/events/]," +
-        "a[href^=http://feeds.technorati.com/events/]," +
-        "a[href^=http://h2vx.com/ics/]");
+        "a[href^='http://technorati.com/events/']," +
+        "a[href^='http://feeds.technorati.com/events/']," +
+        "a[href^='http://h2vx.com/ics/']");
 });
 
 function enhancedHCalendarInitLinks(selector) {
