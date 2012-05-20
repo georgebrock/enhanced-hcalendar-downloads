@@ -74,7 +74,7 @@ function enhancedHCalendarMenu(technoratiURL)
 	}
 	
 	// Get variations on the technorati parser URL
-	var eventFragmentURL = technoratiURL.replace(/^http:\/\/((feeds.)?technorati.com\/events|h2vx.com/ics)\//, "");
+	var eventFragmentURL = technoratiURL.replace(/^http:\/\/((feeds.)?technorati.com\/events|h2vx.com\/ics)\//, "");
 	var webcalURL = technoratiURL.replace(/^http:\/\//, "webcal://");
 	
 	// Get the event container ID
