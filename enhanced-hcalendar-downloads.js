@@ -16,7 +16,7 @@ Author: George Brocklehurst (george.brocklehurst@gmail.com)
         $(selector).click(function (e) {
             var $menu, x, y;
 
-            $menu = enhancedHCalendarMenu($(this).attr("href"));
+            $menu = buildMenu($(this).attr("href"));
             if (!$menu) {
                 return true;
             }
@@ -57,7 +57,7 @@ Author: George Brocklehurst (george.brocklehurst@gmail.com)
         });
     }
 
-    function enhancedHCalendarMenu(iCalendarURL) {
+    function buildMenu(iCalendarURL) {
         var $menu, $list;
 
         $menu = $("#enhanced-hcalendar-menu");
