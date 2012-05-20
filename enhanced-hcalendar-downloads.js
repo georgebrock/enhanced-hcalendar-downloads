@@ -73,15 +73,12 @@ Author: George Brocklehurst (george.brocklehurst@gmail.com)
             $list.html("");
         }
 
-        // Get variations on the technorati parser URL
         var eventFragmentURL = iCalendarURL.replace(
             /^http:\/\/((feeds.)?technorati.com\/events|h2vx.com\/ics)\//, "");
 
-        // Get the event container ID
         var parts = eventFragmentURL.split("#");
         var elementID = parts[1];
 
-        // Extract event using sumo
         var events = HCalendar.discover(document.getElementById(elementID));
         if (events.length > 0) {
             var evt = events[0];
@@ -121,7 +118,6 @@ Author: George Brocklehurst (george.brocklehurst@gmail.com)
                 "</li>");
         }
 
-        // Set URLs that don't need specific event details
         $list.prepend(
             "<li class='ics'>" +
             "<a href='" + iCalendarURL + "'" +
