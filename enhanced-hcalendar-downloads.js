@@ -99,8 +99,8 @@ Author: George Brocklehurst (george.brocklehurst@gmail.com)
                 }
             }
 
-            var urlStartDate = enhancedHCalendarMakeISODate(evt.dtstart);
-            var urlEndDate = enhancedHCalendarMakeISODate(evt.dtend);
+            var urlStartDate = iso8601(evt.dtstart);
+            var urlEndDate = iso8601(evt.dtend);
 
             var mDur = (evt.dtend.getTime() - evt.dtstart.getTime()) / 60000;
             var hDur = 0;
@@ -160,7 +160,7 @@ Author: George Brocklehurst (george.brocklehurst@gmail.com)
         return $menu;
     }
 
-    function enhancedHCalendarMakeISODate(date) {
+    function iso8601(date) {
         var y, m, d, th, tm, ts;
 
         y = "" + date.getFullYear();
